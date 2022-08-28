@@ -1,0 +1,588 @@
+<resources>
+    <string name="app_name">DateApp</string>
+
+    <string name="enter_name">Enter your name</string>
+    <string name="enter_name_hint">Enter Name</string>
+
+    <string name="enter_age">Enter date of your birth</string>
+    <string name="enter_age_hint">Birthday date</string>
+
+    <string name="enter_enable_gps">Allow gps access</string>
+    <string name="enter_enable_gps_button">Gps</string>
+    <string name="gps_text">Localisation is needed for our app to function properly</string>
+
+    <string name="enter_gender">Enter your gender</string>
+    <string name="enter_gender_hint">Enter your gender</string>
+    <string name="enter_male">Male</string>
+    <string name="enter_female">Female</string>
+    <string name="enter_other">Other</string>
+    <string name="enter_prefer_not_to_say">Prefer not to say</string>
+
+    <string name="enter_orientation">Enter your orientation</string>
+    <string name="enter_orientation_hint">Select orientation</string>
+
+    <string name="enter_passions">Enter passions</string>
+    <string name="enter_passions_add">Add</string>
+
+    <string name="enter_description">Enter description</string>
+    <string name="enter_description_hint">Enter description</string>
+
+    <string name="enter_photos">Add photos</string>
+    <string name="enter_photos_hint">Add photos</string>
+
+    <string name="enter_who_to_show">Decide who you want to see</string>
+    <string name="enter_who_to_show_hint">Decide who you want to see</string>
+
+    <string name="enter_who_to_show_genders">Select genders you want to see</string>
+    <string name="enter_who_to_show_orientations">Select orientations you want to see</string>
+    <string name="enter_who_to_show_distance">Select distance</string>
+    <string name="enter_who_to_show_age">Select age</string>
+    <string name="enter_who_to_show_passions">Select passions you want to see</string>
+
+
+
+    <string name="next_fragment">Next</string>
+    <string name="previous_fragment">Previous</string>
+    <string name="create_profile">Create</string>
+
+    <string name="verification_link">Verification link has been sent</string>
+    <string name="send_link_again">Send again</string>
+
+    <string name="sign_in_failed">Sign in failed</string>
+    <string name="sign_in_cancelled">Sign in canceled</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="account_disabled">Account is disabled by administrator</string>
+    <string name="unknown_error">An unknown error occurred</string>
+
+
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Prefer not to say</item>
+        <item>Abimegender</item>
+        <item>Abamas gender</item>
+        <item>Aerogender</item>
+        <item>Aesthetigender</item>
+        <item>Affectugender</item>
+        <item>Agender</item>
+        <item>Agenderflux</item>
+        <item>Alexigender</item>
+        <item>Aliusgender</item>
+        <item>Amaregender</item>
+        <item>Ambigender</item>
+        <item>Ambonec</item>
+        <item>Amicagender</item>
+        <item>Androgyne</item>
+        <item>Anesigender</item>
+        <item>Angenital</item>
+        <item>Anogender</item>
+        <item>Anongender</item>
+        <item>Antegender</item>
+        <item>Anxiegender</item>
+        <item>Apagender</item>
+        <item>Apconsugender</item>
+        <item>Astergender</item>
+        <item>Astral Gender</item>
+        <item>Autigender</item>
+        <item>Autogender</item>
+        <item>Axigender</item>
+        <item>Bigender</item>
+        <item>Biogender</item>
+        <item>Blurgender</item>
+        <item>Boyflux</item>
+        <item>Burstgender</item>
+        <item>Caelgender</item>
+        <item>Cassgender</item>
+        <item>Cassflux</item>
+        <item>Cavusgender</item>
+        <item>Cendgender</item>
+        <item>Ceterofluid</item>
+        <item>Ceterogender</item>
+        <item>Cisgender</item>
+        <item>Cludgender</item>
+        <item>Collgender</item>
+        <item>Colorgender</item>
+        <item>Comogender</item>
+        <item>Condigender</item>
+        <item>Deliciagender</item>
+        <item>Demifluid</item>
+        <item>Demiflux</item>
+        <item>Demigender</item>
+        <item>Domgender</item>
+        <item>Duragender</item>
+        <item>Egogender</item>
+        <item>Helikoptr szturmowy</item>
+        <item>Epicene</item>
+        <item>Esspigender</item>
+        <item>Exgender</item>
+        <item>Existigender</item>
+        <item>Femfluid</item>
+        <item>Femgender</item>
+        <item>Fluidflux</item>
+        <item>Gemigender</item>
+        <item>Genderblank</item>
+        <item>Genderflow</item>
+        <item>Genderfluid</item>
+        <item>Genderfuzz</item>
+        <item>Genderflux</item>
+        <item>Genderpuck</item>
+        <item>Genderqueer</item>
+        <item>Gender Neutral</item>
+        <item>Girlflux</item>
+        <item>Healgender</item>
+        <item>Mirrorgender</item>
+        <item>Omnigender</item>
+    </string-array>
+    
+    <string-array name="sex_orientations">
+        <item>Prefer not to say</item>
+        <item>Abnosexual</item>
+        <item>Abrosexual</item>
+        <item>Aceflux</item>
+        <item>Aequesexual</item>
+        <item>Agynosexual</item>
+        <item>Akoisexual</item>
+        <item>Aliquasexual</item>
+        <item>Allosexual</item>
+        <item>Amorplatonic</item>
+        <item>Androbisexual</item>
+        <item>Androflexibility</item>
+        <item>Androsexual</item>
+        <item>Androgynosexual</item>
+        <item>Anegosexual</item>
+        <item>Anthrosexual</item>
+        <item>Apothisexual</item>
+        <item>Asexual</item>
+        <item>Autosexual</item>
+        <item>Avansexual</item>
+        <item>Bi+ sexuality</item>
+        <item>Bisexual</item>
+        <item>Boreasexual</item>
+        <item>Burstsexual</item>
+        <item>Casssexual</item>
+        <item>Ceasesexual</item>
+        <item>Ceterosexual</item>
+        <item>Coeosexual</item>
+        <item>Cupidosexual</item>
+        <item>Demisexual</item>
+        <item>Femmesexual</item>
+        <item>Fictosexual</item>
+        <item>Finsexual</item>
+        <item>Flexisexual</item>
+        <item>Fraysexual</item>
+        <item>Gay</item>
+        <item>Graysexual</item>
+        <item>Gynesexual</item>
+        <item>Gynosexual</item>
+        <item>Heterosexual</item>
+        <item>Homosexual</item>
+        <item>Iculasexual</item>
+        <item>Kalossexual</item>
+        <item>Lamvanosexual</item>
+        <item>Lesbian</item>
+        <item>Limnosexual</item>
+        <item>Lithosexual</item>
+        <item>Masexual</item>
+        <item>Mascusexual</item>
+        <item>Minsexual</item>
+        <item>Monosexual</item>
+        <item>Mutosexual</item>
+        <item>Narysexual</item>
+        <item>Neusexual</item>
+        <item>Ninsexual</item>
+        <item>Novisexual</item>
+        <item>Novosexual</item>
+        <item>Omnisexual</item>
+        <item>Onesexual</item>
+        <item>Pansexual</item>
+        <item>Penultisexual</item>
+        <item>Polysexual</item>
+        <item>Pomosexual</item>
+        <item>Proculsexual</item>
+        <item>Queer</item>
+        <item>Sanssexual</item>
+        <item>Sapiosexual</item>
+        <item>Semibisexual</item>
+        <item>Skoliosexual</item>
+        <item>Spectrasexual</item>
+        <item>Ssiosexual</item>
+        <item>Taosexual</item>
+        <item>Zygosexual</item>
+    </string-array>
+
+    <string-array name="passions">
+        <item>#fashion</item>
+        <item>#photooftheday</item>
+        <item>#beautiful</item>
+        <item>#photography</item>
+        <item>#picoftheday</item>
+        <item>#happy</item>
+        <item>#follow</item>
+        <item>#nature</item>
+        <item>#tbt</item>
+        <item>#instagram</item>
+        <item>#travel</item>
+        <item>#like4like</item>
+        <item>#style</item>
+        <item>#repost</item>
+        <item>#summer</item>
+        <item>#instadaily</item>
+        <item>#selfie</item>
+        <item>#beauty</item>
+        <item>#girl</item>
+        <item>#friends</item>
+        <item>#instalike</item>
+        <item>#me</item>
+        <item>#smile</item>
+        <item>#family</item>
+        <item>#photo</item>
+        <item>#life</item>
+        <item>#likeforlike</item>
+        <item>#music</item>
+        <item>#ootd</item>
+        <item>#makeup</item>
+        <item>#follow4follow</item>
+        <item>#amazing</item>
+        <item>#igers</item>
+        <item>#nofilter</item>
+        <item>#model</item>
+        <item>#sunset</item>
+        <item>#beach</item>
+        <item>#design</item>
+        <item>#motivation</item>
+        <item>#instamood</item>
+        <item>#foodporn</item>
+        <item>#lifestyle</item>
+        <item>#followforfollow</item>
+        <item>#sky</item>
+        <item>#l4l</item>
+        <item>#f4f</item>
+        <item>#handmade</item>
+        <item>#likeforlikes</item>
+        <item>#cat</item>
+        <item>#likes</item>
+        <item>#like</item>
+        <item>#follow</item>
+        <item>#likeforlikes</item>
+        <item>#love</item>
+        <item>#instagood</item>
+        <item>#instagram</item>
+        <item>#followforfollowback</item>
+        <item>#followme</item>
+        <item>#photooftheday</item>
+        <item>#bhfyp</item>
+        <item>#instalike</item>
+        <item>#photography</item>
+        <item>#l</item>
+        <item>#instadaily</item>
+        <item>#me</item>
+        <item>#picoftheday</item>
+        <item>#beautiful</item>
+        <item>#myself</item>
+        <item>#likeforfollow</item>
+        <item>#fashion</item>
+        <item>#smile</item>
+        <item>#followers</item>
+        <item>#likeforlike</item>
+        <item>#followback</item>
+        <item>#f</item>
+        <item>#followforfollow</item>
+        <item>#comment</item>
+        <item>#likesforlikes</item>
+        <item>#bhfyp</item>
+        <item>#fashion</item>
+        <item>#love</item>
+        <item>#style</item>
+        <item>#styleinspo</item>
+        <item>#ootd</item>
+        <item>#outfitoftheday</item>
+        <item>#whatiwore</item>
+        <item>#shoppingaddict</item>
+        <item>#beautydoesnthavetobepain</item>
+        <item>#currentlywearing</item>
+        <item>#instastyle</item>
+        <item>#lookgoodfeelgood</item>
+        <item>#fashionblogger</item>
+        <item>#fashionista</item>
+        <item>#fashionstyle</item>
+        <item>#fashionable</item>
+        <item>#fashiongram</item>
+        <item>#fashionblog</item>
+        <item>#fashionaddict</item>
+        <item>#fashionphotography</item>
+        <item>#food</item>
+        <item>#foodporn</item>
+        <item>#foodie</item>
+        <item>#instafood</item>
+        <item>#foodphotography</item>
+        <item>#foodstagram</item>
+        <item>#yummy</item>
+        <item>#instagood</item>
+        <item>#love</item>
+        <item>#foodblogger</item>
+        <item>#foodlover</item>
+        <item>#delicious</item>
+        <item>#homemade</item>
+        <item>#healthyfood</item>
+        <item>#photooftheday</item>
+        <item>#picoftheday</item>
+        <item>#dinner</item>
+        <item>#foodgasm</item>
+        <item>#foodies</item>
+        <item>#tasty</item>
+        <item>#cooking</item>
+        <item>#instadaily</item>
+        <item>#lunch</item>
+        <item>#bhfyp</item>
+        <item>#restaurant</item>
+        <item>#healthy</item>
+        <item>#travel</item>
+        <item>#nature</item>
+        <item>#photography</item>
+        <item>#travelphotography</item>
+        <item>#photooftheday</item>
+        <item>#instagood</item>
+        <item>#travelgram</item>
+        <item>#picoftheday</item>
+        <item>#photo</item>
+        <item>#beautiful</item>
+        <item>#art</item>
+        <item>#naturephotography</item>
+        <item>#wanderlust</item>
+        <item>#adventure</item>
+        <item>#instatrave</item>
+        <item>#travelblogger</item>
+        <item>#landscape</item>
+        <item>#summer</item>
+        <item>#trip</item>
+        <item>#explore</item>
+        <item>#pet</item>
+        <item>#dog</item>
+        <item>#pets</item>
+        <item>#dogsofinstagram</item>
+        <item>#cute</item>
+        <item>#petsofinstagram</item>
+        <item>#dogs</item>
+        <item>#cat</item>
+        <item>#love</item>
+        <item>#puppy</item>
+        <item>#cats</item>
+        <item>#petstagram</item>
+        <item>#animals</item>
+        <item>#animal</item>
+        <item>#instadog</item>
+        <item>#instagram</item>
+        <item>#dogstagram</item>
+        <item>#doglover</item>
+        <item>#of</item>
+        <item>#catsofinstagram</item>
+        <item>#dogoftheday</item>
+        <item>#doglovers</item>
+        <item>#petlovers</item>
+        <item>#doglife</item>
+        <item>#instapet</item>
+        <item>#catstagram</item>
+        <item>#instagood</item>
+        <item>#cachorro</item>
+        <item>#catlover</item>
+        <item>#techie</item>
+        <item>#latesttech</item>
+        <item>#ilovemygadgets</item>
+        <item>#gadgetsgalore</item>
+        <item>#apple</item>
+        <item>#android</item>
+        <item>#applevsandroid</item>
+        <item>#wearabletech</item>
+        <item>#VR</item>
+        <item>#mobile</item>
+        <item>#makinglifeeasier</item>
+        <item>#tech</item>
+        <item>#technology</item>
+        <item>#technews</item>
+        <item>#gadgets</item>
+        <item>#instatech</item>
+        <item>#software</item>
+        <item>#innovation</item>
+        <item>#wedding</item>
+        <item>#bride</item>
+        <item>#weddingdress</item>
+        <item>#weddingphotography</item>
+        <item>#weddingday</item>
+        <item>#weddinginspiration</item>
+        <item>#makeup</item>
+        <item>#weddingplanner</item>
+        <item>#prewedding</item>
+        <item>#bridal</item>
+        <item>#bridetobe</item>
+        <item>#weddingphotographer</item>
+        <item>#weddings</item>
+        <item>#groom</item>
+        <item>#engagement</item>
+        <item>#party</item>
+        <item>#weddingideas</item>
+        <item>#makeupartist</item>
+        <item>#indianwedding</item>
+        <item>#casamento</item>
+        <item>#fitness</item>
+        <item>#gym</item>
+        <item>#workout</item>
+        <item>#fitnessmotivation</item>
+        <item>#motivation</item>
+        <item>#fit</item>
+        <item>#bodybuilding</item>
+        <item>#training</item>
+        <item>#health</item>
+        <item>#lifestyle</item>
+        <item>#fitfam</item>
+        <item>#healthylifestyle</item>
+        <item>#sport</item>
+        <item>#healthy</item>
+        <item>#gymlife</item>
+        <item>#life</item>
+        <item>#crossfit</item>
+        <item>#personaltrainer</item>
+        <item>#goals</item>
+        <item>#exercise</item>
+        <item>#muscle</item>
+        <item>#stockingstuffers</item>
+        <item>#christmasdecor</item>
+        <item>#spookyhalloween</item>
+        <item>#happyhalloween</item>
+        <item>#thanksgivingtable</item>
+        <item>#turkeyorham</item>
+        <item>#valentineformyvalentine</item>
+        <item>#happyfourth</item>
+        <item>#newyearseve</item>
+        <item>#newyearsresolution</item>
+        <item>#holidaycrazy</item>
+        <item>#holidayspirit</item>
+        <item>#kwanza</item>
+        <item>#hanukkahgift</item>
+        <item>#underthetree</item>
+        <item>#instacontest</item>
+        <item>#instagiveaway</item>
+        <item>#giveaway</item>
+        <item>#sweepstakes</item>
+        <item>#contestalert</item>
+        <item>#contestentry</item>
+        <item>#winit</item>
+        <item>#freebie</item>
+        <item>#winitwednesday</item>
+        <item>#photography</item>
+        <item>#photooftheday</item>
+        <item>#photo</item>
+        <item>#picoftheday</item>
+        <item>#photographer</item>
+        <item>#model</item>
+        <item>#photoshoot</item>
+        <item>#portrait</item>
+        <item>#beauty</item>
+        <item>#travelphotography</item>
+        <item>#canon</item>
+        <item>#selfie</item>
+        <item>#landscape</item>
+        <item>#sunset</item>
+        <item>#fotografia</item>
+        <item>#portraitphotography</item>
+        <item>#photographylovers</item>
+        <item>#artist</item>
+        <item>#nikon</item>
+        <item>#smallbusiness</item>
+        <item>#supportsmallbusiness</item>
+        <item>#handmade</item>
+        <item>#shoplocal</item>
+        <item>#shopsmall</item>
+        <item>#smallbusinessowner</item>
+        <item>#entrepreneur</item>
+        <item>#supportlocal</item>
+        <item>#business</item>
+        <item>#localbusiness</item>
+        <item>#businessowner</item>
+        <item>#blackownedbusiness</item>
+        <item>#art</item>
+        <item>#explorepage</item>
+        <item>#homedecor</item>
+        <item>#covid</item>
+        <item>#startup</item>
+        <item>#entrepreneurship</item>
+        <item>#womeninbusiness</item>
+        <item>#motivation</item>
+        <item>#success</item>
+        <item>#girlboss</item>
+        <item>#entrepreneurlife</item>
+        <item>#handcrafted</item>
+        <item>#local</item>
+        <item>#smallbiz</item>
+        <item>#homemade</item>
+        <item>#custom</item>
+        <item>#smallbusinesssupport</item>
+        <item>#shopsmallbusiness</item>
+        <item>#handmadewithlove</item>
+        <item>#supportsmallbusinesses</item>
+        <item>#supportlocalbusiness</item>
+        <item>#music</item>
+        <item>#hiphop</item>
+        <item>#rap</item>
+        <item>#musician</item>
+        <item>#singer</item>
+        <item>#musica</item>
+        <item>#dj</item>
+        <item>#rock</item>
+        <item>#dance</item>
+        <item>#song</item>
+        <item>#guitar</item>
+        <item>#viral</item>
+        <item>#producer</item>
+        <item>#newmusic</item>
+        <item>#musicvideo</item>
+        <item>#instamusic</item>
+        <item>#livemusic</item>
+        <item>#pop</item>
+        <item>#concert</item>
+        <item>#trap</item>
+        <item>#beats</item>
+        <item>#art</item>
+        <item>#artist</item>
+        <item>#drawing</item>
+        <item>#artwork</item>
+        <item>#painting</item>
+        <item>#artistsoninstagram</item>
+        <item>#illustration</item>
+        <item>#digitalart</item>
+        <item>#design</item>
+        <item>#sketch</item>
+        <item>#nature</item>
+        <item>#naturephotography</item>
+        <item>#sunset</item>
+        <item>#flowers</item>
+        <item>#wildlife</item>
+        <item>#mountains</item>
+        <item>#hiking</item>
+        <item>#explore</item>
+        <item>#outdoors</item>
+        <item>#naturelover</item>
+        <item>#beach</item>
+        <item>#forest</item>
+        <item>#reels</item>
+        <item>#reelsvideo</item>
+        <item>#reelsinstagram</item>
+        <item>#reelsindia</item>
+        <item>#holareels</item>
+        <item>#reelsbrasil</item>
+        <item>#reelsteady</item>
+        <item>#instagramreels</item>
+        <item>#reelsinsta</item>
+        <item>#instareels</item>
+        <item>#reelsofinstagram</item>
+        <item>#k</item>
+        <item>#music</item>
+        <item>#bhfyp</item>
+        <item>#disney</item>
+        <item>#tiktokindia</item>
+        <item>#videoftheday</item>
+        <item>#instareel</item>
+        <item>#foryoupage</item>
+        <item>#fyp</item>
+    </string-array>
+
+</resources>

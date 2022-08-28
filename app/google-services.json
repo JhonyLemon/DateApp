@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "58743988656",
+    "firebase_url": "https://dateapp-8edd7-default-rtdb.firebaseio.com",
+    "project_id": "dateapp-8edd7",
+    "storage_bucket": "dateapp-8edd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58743988656:android:61212759e9468f760eb675",
+        "android_client_info": {
+          "package_name": "com.example.dateapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58743988656-klro74icrnndiq9n79qtapr8b79gd39k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dateapp",
+            "certificate_hash": "b2b4de813a350d9bc519b9418613a41dce0a45e3"
+          }
+        },
+        {
+          "client_id": "58743988656-qpkjto2t8903l4on9jbtpouiscl88c8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4jwvp35V9eGt--rNquAy6WiqouX1aUa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58743988656-qpkjto2t8903l4on9jbtpouiscl88c8e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
