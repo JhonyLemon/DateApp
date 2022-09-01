@@ -46,7 +46,8 @@
     <string name="create_profile">Create</string>
 
     <string name="verification_link">Verification link has been sent</string>
-    <string name="send_link_again">Send again</string>
+    <string name="verification_link_failure">Verification link couldn\'t be sent</string>
+    <string name="send_link_again">Send email</string>
 
     <string name="sign_in_failed">Sign in failed</string>
     <string name="sign_in_cancelled">Sign in canceled</string>

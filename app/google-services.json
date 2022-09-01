@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:58743988656:android:61212759e9468f760eb675",
+        "mobilesdk_app_id": "1:58743988656:android:507c8de4f0f7f8c30eb675",
         "android_client_info": {
-          "package_name": "com.example.dateapp"
+          "package_name": "pl.jhonylemon.dateapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "58743988656-klro74icrnndiq9n79qtapr8b79gd39k.apps.googleusercontent.com",
+          "client_id": "58743988656-6ff6r3csupe333c71irqgrmpq0fsvat8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.dateapp",
+            "package_name": "pl.jhonylemon.dateapp",
             "certificate_hash": "b2b4de813a350d9bc519b9418613a41dce0a45e3"
           }
         },

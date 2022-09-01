@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/enterNameFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterNameFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterNameFragment"
         android:label="fragment_enter_name"
         tools:layout="@layout/fragment_enter_name" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/enterAgeFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterAgeFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterAgeFragment"
         android:label="fragment_enter_age"
         tools:layout="@layout/fragment_enter_age" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/enterAllowGpsFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterAllowGpsFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterAllowGpsFragment"
         android:label="fragment_enter_allow_gps"
         tools:layout="@layout/fragment_enter_allow_gps" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/enterGenderFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterGenderFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterGenderFragment"
         android:label="fragment_enter_gender"
         tools:layout="@layout/fragment_enter_gender" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/enterPassionsFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterPassionsFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterPassionsFragment"
         android:label="fragment_enter_passions"
         tools:layout="@layout/fragment_enter_passions" >
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/enterOrientationFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterOrientationFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterOrientationFragment"
         android:label="fragment_enter_orientation"
         tools:layout="@layout/fragment_enter_orientation" >
         <action
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/enterWhoToShowFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterWhoToShowFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterWhoToShowFragment"
         android:label="fragment_enter_who_to_show"
         tools:layout="@layout/fragment_enter_who_to_show" >
         <action
@@ -79,7 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/enterPhotosFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterPhotosFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterPhotosFragment"
         android:label="fragment_enter_photos"
         tools:layout="@layout/fragment_enter_photos" >
         <action
@@ -87,23 +87,18 @@
             app:destination="@id/enterWhoToShowFragment" />
     </fragment>
     <fragment
-        android:id="@+id/enterVerificationFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterVerificationFragment"
-        android:label="fragment_enter_verification"
-        tools:layout="@layout/fragment_enter_verification" />
-    <fragment
         android:id="@+id/loadingFragment"
-        android:name="com.example.dateapp.fragments.LoadingFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.auth.LoadingFragment"
         android:label="fragment_loading"
         tools:layout="@layout/fragment_loading" />
     <fragment
         android:id="@+id/authPickerFragment"
-        android:name="com.example.dateapp.fragments.auth.AuthPickerFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.auth.AuthPickerFragment"
         android:label="fragment_auth_picker"
         tools:layout="@layout/fragment_auth_picker" />
     <fragment
         android:id="@+id/enterDescriptionFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.implementation.EnterDescriptionFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.implementation.EnterDescriptionFragment"
         android:label="fragment_enter_description"
         tools:layout="@layout/fragment_enter_description" >
         <action
@@ -112,7 +107,7 @@
     </fragment>
     <fragment
         android:id="@+id/listSelectionFragment"
-        android:name="com.example.dateapp.fragments.accountcreation.ListSelectionFragment"
+        android:name="pl.jhonylemon.dateapp.fragments.accountcreation.ListSelectionFragment"
         android:label="fragment_enter_selection_list"
         tools:layout="@layout/fragment_enter_selection_list" />
 </navigation>
