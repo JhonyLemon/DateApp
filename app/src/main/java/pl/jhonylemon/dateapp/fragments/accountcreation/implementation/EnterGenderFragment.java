@@ -10,16 +10,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.databinding.FragmentEnterGenderBinding;
-import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreation;
-import pl.jhonylemon.dateapp.fragments.accountcreation.ListSelectionFragment;
+import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreationFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EnterGenderFragment extends AccountCreation {
+public class EnterGenderFragment extends AccountCreationFragment {
 
     public static final String TAG="EnterGenderFragment";
     private static final Integer ProgressBarProgress = 4;
@@ -127,26 +129,43 @@ public class EnterGenderFragment extends AccountCreation {
 
 
     @Override
-    protected void load() {
-       uncheckAll();
-       genderID=this.getAuthenticationViewModel().getGender();
-       if(genderID!=null){
-           if(genderID.equals(0)){
-               binding.genderMale.setChecked(true);
-           }else if (genderID.equals(1)){
-               binding.genderFemale.setChecked(true);
-           }else if (genderID.equals(2)){
-               binding.genderDontWantToTell.setChecked(true);
-           } else{
-               binding.genderOther.setChecked(true);
-               binding.genderOther.setText(genders.get(genderID));
+    protected Task<DataSnapshot> load() {
+        return dataTransfer.getGenderId(dataTransfer.getUUID()).get().addOnCompleteListener(task -> {
+           if(task.isSuccessful()){
+               if(binding!=null) {
+                   uncheckAll();
+                   genderID = task.getResult().getValue(Integer.class);
+                   if (genderID != null) {
+                       if (genderID.equals(0)) {
+                           binding.genderMale.setChecked(true);
+                       } else if (genderID.equals(1)) {
+                           binding.genderFemale.setChecked(true);
+                       } else if (genderID.equals(2)) {
+                           binding.genderDontWantToTell.setChecked(true);
+                       } else {
+                           binding.genderOther.setChecked(true);
+                           binding.genderOther.setText(genders.get(genderID));
+                       }
+                   }
+                   validateAndEnableNext();
+               }
+           }else{
+               load();
            }
-       }
+       });
     }
 
     @Override
-    protected void save() {
-        this.getAuthenticationViewModel().setGender(genderID);
+    protected Task<Void> save() {
+        return dataTransfer.setGenderId(dataTransfer.getUUID(),genderID).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    binding.next.setEnabled(this.getValid());
+                }
+            }else{
+                save();
+            }
+        });
     }
 
     @Override
@@ -159,11 +178,19 @@ public class EnterGenderFragment extends AccountCreation {
     protected Boolean validate() {
         if(genderID!=null) {
             this.setValid(true);
-            binding.next.setEnabled(this.getValid());
             return this.getValid();
         }
         this.setValid(false);
         binding.next.setEnabled(this.getValid());
         return this.getValid();
+    }
+
+    @Override
+    protected Boolean validateAndEnableNext() {
+        boolean valid = validate();
+        if(valid){
+            binding.next.setEnabled(getValid());
+        }
+        return valid;
     }
 }

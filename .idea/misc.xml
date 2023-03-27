@@ -5,21 +5,31 @@
       <map>
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.1225" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/app_background.xml" value="0.1225" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1225" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1225" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1225" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.1225" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_baseline_chat_bubble_24.xml" value="0.1225" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1225" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_baseline_whatshot_24.xml" value="0.1225" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1225" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/shape_chip_drawable.xml" value="0.1225" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/drawable/swipe_profile_background.xml" value="0.1" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/activity_custom_auth_picker.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/auth_method_picker_custom_layout.xml" value="1.16875" />
-        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/authentication_activity.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/authentication_activity.xml" value="0.25" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/chat_item.xml" value="0.33" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/chat_window_bubble.xml" value="0.33" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/chip_text_item.xml" value="0.5" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/crop_photo_fragment.xml" value="0.1" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_allow_gps.xml" value="0.168359375" />
-        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_auth_picker.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_chat.xml" value="0.2234375" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_auth_picker.xml" value="0.33" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_chat.xml" value="0.22" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_chat_window.xml" value="0.2234375" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_create_account.xml" value="0.25" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_crop_image.xml" value="0.25" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_crop_photo.xml" value="0.14" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_enter_age.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_enter_allow_gps.xml" value="0.22" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_enter_description.xml" value="0.25" />
@@ -36,16 +46,24 @@
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_enter_selection_list.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_enter_verification.xml" value="0.2234375" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_enter_who_to_show.xml" value="0.25" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_image_croper.xml" value="0.18426678067550234" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_liked.xml" value="0.2234375" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_loading.xml" value="0.2234375" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_login.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_login_or_register.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_profile.xml" value="0.2234375" />
-        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_swipe.xml" value="0.2234375" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_profile_edit.xml" value="0.25" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_profile_info.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_settings.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_swipe.xml" value="0.25" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_swipe_expanded.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/fragment_who_to_show.xml" value="0.2234375" />
-        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/gridview_photo_item.xml" value="0.67" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/grid_view_photo.xml" value="0.2234375" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/gridview_photo_item.xml" value="0.25" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/main_activity.xml" value="0.1" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/profile_activity.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/simple_recycler_item.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/layout/swipe_profile.xml" value="0.25" />
         <entry key="..\:/Users/Adam/StudioProjects/DateApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.22447916666666667" />
       </map>
     </option>

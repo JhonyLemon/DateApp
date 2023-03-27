@@ -9,21 +9,21 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.databinding.FragmentEnterNameBinding;
-import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreation;
-import pl.jhonylemon.dateapp.viewmodels.AuthenticationViewModel;
+import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreationFragment;
 
 
-public class EnterNameFragment extends AccountCreation {
+public class EnterNameFragment extends AccountCreationFragment {
 
     public static final String TAG="EnterNameFragment";
     private static final Integer ProgressBarProgress = 1;
     private FragmentEnterNameBinding binding;
-
 
     public EnterNameFragment() {
 
@@ -67,13 +67,33 @@ public class EnterNameFragment extends AccountCreation {
     }
 
     @Override
-    protected void load() {
-        this.binding.nameTextInputEditText.setText(this.getAuthenticationViewModel().getName());
+    protected Task<DataSnapshot> load() {
+        return dataTransfer.getName(dataTransfer.getUUID()).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    binding.nameTextInputEditText.setText(task.getResult().getValue(String.class));
+                    validateAndEnableNext();
+                }
+            }else{
+                load();
+            }
+        });
     }
 
     @Override
-    protected void save() {
-        this.getAuthenticationViewModel().setName(binding.nameTextInputEditText.getText().toString());
+    protected Task<Void> save() {
+        return dataTransfer.setName(
+                dataTransfer.getUUID(),
+                binding.nameTextInputEditText.getText().toString()
+        ).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    binding.next.setEnabled(getValid());
+                }
+            }else {
+                save();
+            }
+        });
     }
 
     @Override
@@ -84,14 +104,22 @@ public class EnterNameFragment extends AccountCreation {
 
     @Override
     protected Boolean validate() {
-        if(binding.nameTextInputEditText.getText().toString().length()>0) {
+        if(binding.nameTextInputEditText.getText()!=null && binding.nameTextInputEditText.getText().toString().length()>0) {
             this.setValid(true);
-            binding.next.setEnabled(this.getValid());
             return this.getValid();
         }
         this.setValid(false);
         binding.next.setEnabled(this.getValid());
         return this.getValid();
+    }
+
+    @Override
+    protected Boolean validateAndEnableNext() {
+        boolean valid = validate();
+        if(valid){
+            binding.next.setEnabled(getValid());
+        }
+        return valid;
     }
 
 }

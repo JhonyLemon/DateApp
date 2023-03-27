@@ -8,22 +8,21 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import pl.jhonylemon.dateapp.AuthenticationActivity;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.database.DataSnapshot;
+
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.databinding.FragmentEnterOrientationBinding;
-import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreation;
-import pl.jhonylemon.dateapp.fragments.accountcreation.ListSelectionFragment;
-import pl.jhonylemon.dateapp.viewmodels.AuthenticationViewModel;
+import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreationFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EnterOrientationFragment extends AccountCreation {
+public class EnterOrientationFragment extends AccountCreationFragment {
 
     public static final String TAG="EnterOrientationFragment";
     private static final Integer ProgressBarProgress = 5;
@@ -51,12 +50,14 @@ public class EnterOrientationFragment extends AccountCreation {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 orientationID = bundle.getInt(ListSelectionFragment.RETURN_ID);
-                if(validate())
-                    save();
-                load();
+                save().continueWithTask(task -> {
+                    if (task.isSuccessful()) {
+                        return load();
+                    }
+                    return Tasks.forCanceled();
+                });
             }
         });
-
         return this.init(binding);
     }
 
@@ -89,16 +90,33 @@ public class EnterOrientationFragment extends AccountCreation {
     }
 
     @Override
-    protected void load() {
-        orientationID=this.getAuthenticationViewModel().getOrientation();
-        if(orientationID!=null){
-            binding.selectOrientation.setText(orientations.get(orientationID));
-        }
+    protected Task<DataSnapshot> load() {
+        return dataTransfer.getOrientationId(dataTransfer.getUUID()).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    orientationID = task.getResult().getValue(Integer.class);
+                    if (orientationID != null) {
+                        binding.selectOrientation.setText(orientations.get(orientationID));
+                    }
+                    validateAndEnableNext();
+                }
+            }else{
+                load();
+            }
+        });
     }
 
     @Override
-    protected void save() {
-        this.getAuthenticationViewModel().setOrientation(orientationID);
+    protected Task<Void> save() {
+        return dataTransfer.setOrientationId(dataTransfer.getUUID(), orientationID).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    binding.next.setEnabled(this.getValid());
+                }
+            }else{
+                save();
+            }
+        });
     }
 
     @Override
@@ -111,11 +129,19 @@ public class EnterOrientationFragment extends AccountCreation {
     protected Boolean validate() {
         if(orientationID!=null) {
             this.setValid(true);
-            binding.next.setEnabled(this.getValid());
             return this.getValid();
         }
         this.setValid(false);
         binding.next.setEnabled(this.getValid());
         return this.getValid();
+    }
+
+    @Override
+    protected Boolean validateAndEnableNext() {
+        boolean valid = validate();
+        if(valid){
+            binding.next.setEnabled(getValid());
+        }
+        return valid;
     }
 }

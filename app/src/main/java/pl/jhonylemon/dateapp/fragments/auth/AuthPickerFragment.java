@@ -21,7 +21,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
-import pl.jhonylemon.dateapp.AuthenticationActivity;
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.databinding.FragmentAuthPickerBinding;
 import com.firebase.ui.auth.AuthUI;
@@ -29,27 +28,14 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
-import com.firebase.ui.auth.util.FirebaseAuthError;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AuthPickerFragment extends Fragment implements ActivityResultCallback<FirebaseAuthUIAuthenticationResult>, View.OnClickListener {
@@ -58,12 +44,8 @@ public class AuthPickerFragment extends Fragment implements ActivityResultCallba
     private FragmentAuthPickerBinding binding;
     NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.authPickerFragment,true).build();
     private NavController navController;
-    private FirebaseUser user;
-    private FirebaseAuth mAuth;
     private Uri link;
-    private static final String GOOGLE_TOS_URL = "https://www.google.com/policies/terms/";
     private static final String FIREBASE_TOS_URL = "https://firebase.google.com/terms/";
-    private static final String GOOGLE_PRIVACY_POLICY_URL = "https://www.google.com/policies/privacy/";
     private static final String FIREBASE_PRIVACY_POLICY_URL = "https://firebase.google.com/terms/analytics/#7_privacy";
 
     private final ActivityResultLauncher<Intent> signIn =
@@ -100,11 +82,6 @@ public class AuthPickerFragment extends Fragment implements ActivityResultCallba
         binding.customGoogleSigninButton.setOnClickListener(this);
         binding.customEmailSigninButton.setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        user=mAuth.getCurrentUser();
-
-
-
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getActivity().getIntent()).addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
@@ -131,30 +108,18 @@ public class AuthPickerFragment extends Fragment implements ActivityResultCallba
 
     public Intent getIntent(int id)
     {
-        if(link==null) {
-            return AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    // smart lock
-                    .setIsSmartLockEnabled(false, true)
-                    // providers we can sign in with
-                    .setAvailableProviders(Collections.singletonList(providers.get(id)))
-                    //setting theme for intent
-                    .setTosAndPrivacyPolicyUrls(FIREBASE_TOS_URL, FIREBASE_PRIVACY_POLICY_URL)
-                    // creating custom singing intent
-                    .build();
-        }else{
-            return AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setEmailLink(link.toString())
-                    // smart lock
-                    .setIsSmartLockEnabled(false, true)
-                    // providers we can sign in with
-                    .setAvailableProviders(Collections.singletonList(providers.get(id)))
-                    //setting theme for intent
-                    .setTosAndPrivacyPolicyUrls(FIREBASE_TOS_URL, FIREBASE_PRIVACY_POLICY_URL)
-                    // creating custom singing intent
-                    .build();
+        AuthUI.SignInIntentBuilder builder = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                // smart lock
+                .setIsSmartLockEnabled(false, true)
+                // providers we can sign in with
+                .setAvailableProviders(Collections.singletonList(providers.get(id)))
+                //setting theme for intent
+                .setTosAndPrivacyPolicyUrls(FIREBASE_TOS_URL, FIREBASE_PRIVACY_POLICY_URL);
+        if(link!=null) {
+            builder.setEmailLink(link.toString());
         }
+        return builder.build();
     }
 
     @Override
@@ -169,7 +134,6 @@ public class AuthPickerFragment extends Fragment implements ActivityResultCallba
         // Successfully signed in
         if (resultCode == RESULT_OK) {
             //logged in
-            user=mAuth.getCurrentUser();
             userSignedIn();
         } else {
             // Sign in failed
@@ -186,7 +150,7 @@ public class AuthPickerFragment extends Fragment implements ActivityResultCallba
                 showSnackbar(R.string.account_disabled);
                 return;
             }
-            showSnackbar(R.string.unknown_error);
+            Snackbar.make(binding.getRoot(),response.getError().getMessage(), Snackbar.LENGTH_LONG).show();
             Log.e(TAG, "Sign-in error: ", response.getError());
         }
     }
@@ -201,8 +165,6 @@ public class AuthPickerFragment extends Fragment implements ActivityResultCallba
     }
 
     private void userSignedIn() {
-        navController.navigate(R.id.enterNameFragment,null,navOptions);
+        navController.navigate(R.id.loadingFragment,null,navOptions);
     }
-
-
 }

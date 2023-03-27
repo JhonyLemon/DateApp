@@ -4,8 +4,10 @@
     package="pl.jhonylemon.dateapp">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 <application
         android:allowBackup="true"
@@ -18,17 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DateApp"
         tools:targetApi="31">
-
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".ProfileActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".AuthenticationActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

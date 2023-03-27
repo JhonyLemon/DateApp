@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "58743988656-q2ufkdf71eb2vd2ue8vohjn75eovvusl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pl.jhonylemon.dateapp",
+            "certificate_hash": "824079cb66c66457ef2dd46c81bb60d6a0379a89"
+          }
+        },
+        {
           "client_id": "58743988656-qpkjto2t8903l4on9jbtpouiscl88c8e.apps.googleusercontent.com",
           "client_type": 3
         }

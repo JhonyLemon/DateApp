@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DateApp</string>
+    <string name="app_name" translatable="false">DateApp</string>
 
     <string name="enter_name">Enter your name</string>
     <string name="enter_name_hint">Enter Name</string>
@@ -27,8 +27,8 @@
     <string name="enter_description">Enter description</string>
     <string name="enter_description_hint">Enter description</string>
 
-    <string name="enter_photos">Add photos</string>
-    <string name="enter_photos_hint">Add photos</string>
+    <string name="enter_photos">Add photo</string>
+    <string name="enter_photos_hint">Add photo</string>
 
     <string name="enter_who_to_show">Decide who you want to see</string>
     <string name="enter_who_to_show_hint">Decide who you want to see</string>
@@ -39,7 +39,9 @@
     <string name="enter_who_to_show_age">Select age</string>
     <string name="enter_who_to_show_passions">Select passions you want to see</string>
 
-
+    <string name="passions">Passions</string>
+    <string name="gender">Gender</string>
+    <string name="orientation">Orientation</string>
 
     <string name="next_fragment">Next</string>
     <string name="previous_fragment">Previous</string>
@@ -112,6 +114,7 @@
         <item>Domgender</item>
         <item>Duragender</item>
         <item>Egogender</item>
+        <item>Superkalifradalistodekspialitycznie</item>
         <item>Helikoptr szturmowy</item>
         <item>Epicene</item>
         <item>Esspigender</item>
@@ -242,6 +245,7 @@
         <item>#music</item>
         <item>#ootd</item>
         <item>#makeup</item>
+        <item>#żyćkomniemnie</item>
         <item>#follow4follow</item>
         <item>#amazing</item>
         <item>#igers</item>
@@ -312,6 +316,7 @@
         <item>#fashionaddict</item>
         <item>#fashionphotography</item>
         <item>#food</item>
+        <item>#debil</item>
         <item>#foodporn</item>
         <item>#foodie</item>
         <item>#instafood</item>

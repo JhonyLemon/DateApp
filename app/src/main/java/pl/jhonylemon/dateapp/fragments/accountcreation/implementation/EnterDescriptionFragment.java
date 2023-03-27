@@ -9,30 +9,21 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import pl.jhonylemon.dateapp.AuthenticationActivity;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.databinding.FragmentEnterDescriptionBinding;
-import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreation;
-import pl.jhonylemon.dateapp.viewmodels.AuthenticationViewModel;
+import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreationFragment;
+import pl.jhonylemon.dateapp.utils.DataTransfer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class EnterDescriptionFragment extends AccountCreation {
+public class EnterDescriptionFragment extends AccountCreationFragment {
 
     public static final String TAG = "EnterDescriptionFragment";
     private static final Integer ProgressBarProgress = 7;
     private FragmentEnterDescriptionBinding binding;
-    private NavController navController;
-    private Integer orientationID = null;
-    AuthenticationViewModel authenticationViewModel;
-
 
     public EnterDescriptionFragment() {
 
@@ -71,6 +62,7 @@ public class EnterDescriptionFragment extends AccountCreation {
         super.onViewCreated(view, savedInstanceState);
         this.setNavController(Navigation.findNavController(view));
         this.getAuthenticationViewModel().setFragment(ProgressBarProgress);
+        dataTransfer = new DataTransfer();
     }
 
     @Override
@@ -80,13 +72,33 @@ public class EnterDescriptionFragment extends AccountCreation {
     }
 
     @Override
-    protected void load() {
-       binding.descriptionTextInputEditText.setText(this.getAuthenticationViewModel().getDescription());
+    protected Task<DataSnapshot> load() {
+        return dataTransfer.getDescription(dataTransfer.getUUID()).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null){
+                    binding.descriptionTextInputEditText.setText(task.getResult().getValue(String.class));
+                    validateAndEnableNext();
+                }
+            }else{
+                load();
+            }
+        });
     }
 
     @Override
-    protected void save() {
-        this.getAuthenticationViewModel().setDescription(binding.descriptionTextInputEditText.getText().toString());
+    protected Task<Void> save() {
+        return dataTransfer.setDescription(
+                dataTransfer.getUUID(),
+                binding.descriptionTextInputEditText.getText().toString()
+        ).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    binding.next.setEnabled(getValid());
+                }
+            }else {
+                save();
+            }
+        });
     }
 
     @Override
@@ -96,13 +108,21 @@ public class EnterDescriptionFragment extends AccountCreation {
 
     @Override
     protected Boolean validate() {
-        if(binding.descriptionTextInputEditText.getText().toString().length()>0) {
+        if(binding.descriptionTextInputEditText.getText()!=null && binding.descriptionTextInputEditText.getText().toString().length()>0) {
             this.setValid(true);
-            binding.next.setEnabled(true);
             return this.getValid();
         }
         this.setValid(false);
         binding.next.setEnabled(true);
         return this.getValid();
+    }
+
+    @Override
+    protected Boolean validateAndEnableNext() {
+        boolean valid = validate();
+        if(valid){
+            binding.next.setEnabled(getValid());
+        }
+        return valid;
     }
 }

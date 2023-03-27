@@ -1,5 +1,7 @@
 package pl.jhonylemon.dateapp.models;
 
+import androidx.annotation.Nullable;
+
 import pl.jhonylemon.dateapp.R;
 
 import java.io.Serializable;
@@ -31,9 +33,9 @@ public class ChipItem implements Serializable {
         this.id=null;
     }
 
-    public ChipItem(String text, Integer drawableId, Integer id) {
+    public ChipItem(String text, @Nullable Integer drawableId, Integer id) {
         this.text = text;
-        this.drawableId = drawableId;
+        this.drawableId = drawableId==null ? R.drawable.ic_baseline_cancel_24 : drawableId;
         this.id = id;
     }
 

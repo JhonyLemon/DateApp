@@ -12,37 +12,35 @@ import androidx.navigation.Navigation;
 
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.adapters.RecyclerChipsViewAdapter;
-import pl.jhonylemon.dateapp.databinding.FragmentEnterPassionsBinding;
 
-import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreation;
-import pl.jhonylemon.dateapp.fragments.accountcreation.ListSelectionFragment;
+import pl.jhonylemon.dateapp.databinding.FragmentEnterPassionsBinding;
+import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreationFragment;
 import pl.jhonylemon.dateapp.mappers.ChipItemMapper;
-import pl.jhonylemon.dateapp.mappers.ChipItemMapperImpl;
 import pl.jhonylemon.dateapp.models.ChipItem;
+
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-public class EnterPassionsFragment extends AccountCreation {
+public class EnterPassionsFragment extends AccountCreationFragment {
 
-    public static final String TAG="EnterPassionsFragment";
+    public static final String TAG = "EnterPassionsFragment";
     private static final Integer ProgressBarProgress = 6;
     private FragmentEnterPassionsBinding binding;
 
     private List<String> passions;
-
     private List<ChipItem> passionChips;
-
-    private ChipItemMapper mapper = new ChipItemMapperImpl();
-
     private RecyclerChipsViewAdapter adapter;
-
 
     public EnterPassionsFragment() {
 
@@ -53,7 +51,7 @@ public class EnterPassionsFragment extends AccountCreation {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentEnterPassionsBinding.inflate(inflater, container, false);
 
-        passions=new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.passions)));
+        passions = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.passions)));
 
         passionChips = new ArrayList<>();
 
@@ -63,13 +61,18 @@ public class EnterPassionsFragment extends AccountCreation {
         getParentFragmentManager().setFragmentResultListener(ListSelectionFragment.TAG, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                passionChips.add(new ChipItem(passions.get(bundle.getInt(ListSelectionFragment.RETURN_ID))));
-                if(validate())
-                    save();
-                load();
+                load().continueWithTask(task -> {
+                    if (task.isSuccessful()) {
+                        passionChips.add(new ChipItem(passions.get(bundle.getInt(ListSelectionFragment.RETURN_ID))));
+                        return save();
+                    } else {
+                        return Tasks.forCanceled();
+                    }
+                }).addOnCompleteListener(task -> {
+                    validateAndEnableNext();
+                });
             }
         });
-
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
         layoutManager.setFlexDirection(FlexDirection.ROW);
@@ -78,12 +81,12 @@ public class EnterPassionsFragment extends AccountCreation {
         layoutManager.setAlignItems(AlignItems.CENTER);
 
         adapter = new RecyclerChipsViewAdapter(passionChips, getContext(), (value, position) -> {
-            if(position== passionChips.size()){
+            if (position == passionChips.size()) {
                 moveToListSelection();
-            }else{
+            } else {
                 passionChips.remove(position.intValue());
-                if(validate())
-                    save();
+                validate();
+                save();
                 adapter.UpdateList(passionChips);
             }
         });
@@ -104,35 +107,55 @@ public class EnterPassionsFragment extends AccountCreation {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding=null;
+        binding = null;
     }
 
     @Override
     protected void moveToListSelection() {
-        ArrayList<String> withoutSelected= new ArrayList<>(passions);
+        ArrayList<String> withoutSelected = new ArrayList<>(passions);
         Bundle args = new Bundle();
 
         args.putStringArrayList(ListSelectionFragment.FULL_LIST, (ArrayList<String>) passions);
-
-        if (passionChips!=null && passionChips.size()>0)
-            passionChips.forEach(item->{
+        if (passionChips != null && passionChips.size() > 0)
+            passionChips.forEach(item -> {
                 withoutSelected.remove(item.getText());
             });
 
-        args.putStringArrayList(ListSelectionFragment.LIST_WITHOUT_SELECTED,withoutSelected);
-        this.getNavController().navigate(R.id.listSelectionFragment,args);
+        args.putStringArrayList(ListSelectionFragment.LIST_WITHOUT_SELECTED, withoutSelected);
+        this.getNavController().navigate(R.id.listSelectionFragment, args);
     }
 
     @Override
-    protected void load() {
-      passionChips=mapper
-              .mapListIntegerToListChipItem(this.getAuthenticationViewModel().getPassions(),passions);
-      adapter.UpdateList(passionChips);
+    protected Task<DataSnapshot> load() {
+        return dataTransfer.getPassions(dataTransfer.getUUID()).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if(binding!=null) {
+                    passionChips = ChipItemMapper.mapListIntegerToListChipItem(
+                            Optional.ofNullable(
+                                    (ArrayList<Long>) task.getResult().getValue()
+                            ).orElse(new ArrayList<Long>()),
+                            passions
+                    );
+                    adapter.UpdateList(passionChips);
+                    validateAndEnableNext();
+                }
+            } else {
+                load();
+            }
+        });
     }
 
     @Override
-    protected void save() {
-        this.getAuthenticationViewModel().setPassions(mapper.mapListChipItemToListInteger(passionChips,passions));
+    protected Task<Void> save() {
+        return dataTransfer.setPassions(dataTransfer.getUUID(), ChipItemMapper.mapListChipItemToListInteger(passionChips, passions)).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if(binding!=null) {
+                    binding.next.setEnabled(getValid());
+                }
+            } else {
+                save();
+            }
+        });
     }
 
     @Override
@@ -143,13 +166,24 @@ public class EnterPassionsFragment extends AccountCreation {
 
     @Override
     protected Boolean validate() {
-        if(passionChips!=null ){
-            if(passionChips.size()>=5)
-                binding.next.setEnabled(true);
-            else
-                binding.next.setEnabled(false);
+        if (passionChips != null) {
+            if (passionChips.size() >= 5) {
+                setValid(true);
+            } else {
+                setValid(false);
+                if(binding!=null)
+                    binding.next.setEnabled(getValid());
+            }
         }
-        this.setValid(true);
         return this.getValid();
+    }
+
+    @Override
+    protected Boolean validateAndEnableNext() {
+        boolean valid = validate();
+        if (valid) {
+            binding.next.setEnabled(getValid());
+        }
+        return valid;
     }
 }

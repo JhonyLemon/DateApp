@@ -1,45 +1,29 @@
 package pl.jhonylemon.dateapp.fragments.accountcreation.implementation;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.databinding.FragmentEnterAllowGpsBinding;
-import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreation;
+import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreationFragment;
+import pl.jhonylemon.dateapp.utils.GpsChecker;
 
 
-public class EnterAllowGpsFragment extends AccountCreation {
+public class EnterAllowGpsFragment extends AccountCreationFragment {
 
     public static final String TAG="EnterAllowGpsFragment";
     private static final Integer ProgressBarProgress = 3;
     private FragmentEnterAllowGpsBinding binding;
-
-    private ActivityResultLauncher<String> mPermissionResult = registerForActivityResult(
-            new ActivityResultContracts.RequestPermission(),
-            result -> {
-                if(result) {
-                    Log.e("TAG", "onActivityResult: PERMISSION GRANTED");
-                    binding.next.setEnabled(true);
-                } else {
-                    Log.e("TAG", "onActivityResult: PERMISSION DENIED");
-                    binding.next.setEnabled(false);
-                }
-            });
-
 
     public EnterAllowGpsFragment() {
 
@@ -62,6 +46,16 @@ public class EnterAllowGpsFragment extends AccountCreation {
         super.onViewCreated(view, savedInstanceState);
         this.setNavController(Navigation.findNavController(view));
         this.getAuthenticationViewModel().setFragment(ProgressBarProgress);
+        createDocument();
+        askGpsPermission(null);
+    }
+
+    private void createDocument(){
+        this.dataTransfer.setDocument(dataTransfer.getUUID()).addOnCompleteListener(task -> {
+            if(!task.isSuccessful()){
+                createDocument();
+            }
+        });
     }
 
     @Override
@@ -72,17 +66,20 @@ public class EnterAllowGpsFragment extends AccountCreation {
 
     private void askGpsPermission(View view)
     {
-        mPermissionResult.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
+            mainActivityViewModel.setEnableLocation(true);
+            validateAndEnableNext();
     }
 
     @Override
-    protected void load() {
+    protected Task<DataSnapshot> load() {
 
+        return null;
     }
 
     @Override
-    protected void save() {
+    protected Task<Void> save() {
 
+        return null;
     }
 
     @Override
@@ -93,7 +90,7 @@ public class EnterAllowGpsFragment extends AccountCreation {
 
     @Override
     protected Boolean validate() {
-        if(ActivityCompat.checkSelfPermission(getContext(),Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+        if (this.mainActivityViewModel.getMainActivity().startGps()){
             this.setValid(true);
             binding.next.setEnabled(this.getValid());
             return this.getValid();
@@ -101,5 +98,14 @@ public class EnterAllowGpsFragment extends AccountCreation {
         this.setValid(false);
         binding.next.setEnabled(this.getValid());
         return this.getValid();
+    }
+
+    @Override
+    protected Boolean validateAndEnableNext() {
+        boolean valid = validate();
+        if(valid){
+            binding.next.setEnabled(getValid());
+        }
+        return valid;
     }
 }

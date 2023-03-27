@@ -1,6 +1,5 @@
 package pl.jhonylemon.dateapp.fragments.accountcreation.implementation;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,39 +8,35 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import pl.jhonylemon.dateapp.R;
 import pl.jhonylemon.dateapp.adapters.RecyclerChipsViewAdapter;
 import pl.jhonylemon.dateapp.databinding.FragmentEnterWhoToShowBinding;
-import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreation;
-import pl.jhonylemon.dateapp.fragments.accountcreation.ListSelectionFragment;
+import pl.jhonylemon.dateapp.fragments.accountcreation.AccountCreationFragment;
 import pl.jhonylemon.dateapp.mappers.ChipItemMapper;
-import pl.jhonylemon.dateapp.mappers.ChipItemMapperImpl;
 import pl.jhonylemon.dateapp.models.ChipItem;
-import pl.jhonylemon.dateapp.models.UserPreferences;
+import pl.jhonylemon.dateapp.entity.UserPreferences;
+import pl.jhonylemon.dateapp.utils.DataTransfer;
+
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.database.DataSnapshot;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class EnterWhoToShowFragment extends AccountCreation {
+public class EnterWhoToShowFragment extends AccountCreationFragment {
 
     public static final String TAG="EnterWhoToShowFragment";
     private static final String GENDER="GENDER";
@@ -49,8 +44,7 @@ public class EnterWhoToShowFragment extends AccountCreation {
     private static final String ORIENTATION="ORIENTATION";
     private static final Integer ProgressBarProgress = 9;
     private FragmentEnterWhoToShowBinding binding;
-
-    public static final ChipItemMapper mapper = new ChipItemMapperImpl();
+    private NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.enterWhoToShowFragment,true).build();
 
     RecyclerChipsViewAdapter genderAdapter;
     RecyclerChipsViewAdapter passionsAdapter;
@@ -66,9 +60,7 @@ public class EnterWhoToShowFragment extends AccountCreation {
     private List<String> orientationsString;
     private List<String> passionsString;
 
-    private FirebaseFirestore db;
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
+    private DataTransfer dataTransfer;
 
     public EnterWhoToShowFragment() {
     }
@@ -82,9 +74,7 @@ public class EnterWhoToShowFragment extends AccountCreation {
         orientations = new ArrayList<>();
         passions = new ArrayList<>();
 
-        db=FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageReference=storage.getReference();
+        dataTransfer=new DataTransfer();
 
         binding.previous.setOnClickListener(this::movePrevious);
         binding.next.setOnClickListener(this::moveNext);
@@ -98,68 +88,93 @@ public class EnterWhoToShowFragment extends AccountCreation {
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 Integer id = bundle.getInt(ListSelectionFragment.RETURN_ID);
                 String caller = bundle.getString(ListSelectionFragment.CALLER_ID);
+                Task<DataSnapshot> loadTask = load();
                 switch (caller){
                     case GENDER:
-                        genders.add(new ChipItem(gendersString.get(id), R.drawable.ic_baseline_cancel_24,id));
+                        loadTask.continueWithTask(task -> {
+                            if(task.isSuccessful()){
+                                genders.add(new ChipItem(gendersString.get(id), R.drawable.ic_baseline_cancel_24,id));
+                                return dataTransfer.setPrefferedGender(dataTransfer.getUUID(), ChipItemMapper.mapListChipItemToListInteger(genders, gendersString));
+                            }else{
+                                return Tasks.forCanceled();
+                            }
+                        }).addOnCompleteListener(task -> {
+                            if(binding!=null) {
+                                validateAndEnableNext();
+                            }
+                        });
                         break;
                     case PASSION:
-                        passions.add(new ChipItem(passionsString.get(id), R.drawable.ic_baseline_cancel_24,id));
+                        loadTask.continueWithTask(task -> {
+                            if(task.isSuccessful()){
+                                passions.add(new ChipItem(passionsString.get(id), R.drawable.ic_baseline_cancel_24,id));
+                                return dataTransfer.setPrefferedPassions(dataTransfer.getUUID(), ChipItemMapper.mapListChipItemToListInteger(passions, passionsString));
+                            }else{
+                                return Tasks.forCanceled();
+                            }
+                        }).addOnCompleteListener(task -> {
+                            if(binding!=null) {
+                                validateAndEnableNext();
+                            }
+                        });
                         break;
                     case ORIENTATION:
-                        orientations.add(new ChipItem(orientationsString.get(id), R.drawable.ic_baseline_cancel_24,id));
+                        loadTask.continueWithTask(task -> {
+                            if(task.isSuccessful()){
+                                orientations.add(new ChipItem(orientationsString.get(id), R.drawable.ic_baseline_cancel_24,id));
+                                return dataTransfer.setPrefferedOrientation(dataTransfer.getUUID(), ChipItemMapper.mapListChipItemToListInteger(orientations, orientationsString));
+                            }else{
+                                return Tasks.forCanceled();
+                            }
+                        }).addOnCompleteListener(task -> {
+                            if(binding!=null) {
+                                validateAndEnableNext();
+                            }
+                        });
                         break;
                 }
-                if(validate())
-                    save();
-                load();
             }
         });
 
-        genderAdapter = new RecyclerChipsViewAdapter(genders, getContext(), new RecyclerChipsViewAdapter.OnRecyclerItemClick() {
-            @Override
-            public void onItemClick(String value, Integer position) {
-                if(position==genders.size()){//
-                    ArrayList<String> withoutSelected= new ArrayList<>(gendersString);
-                    Bundle args = new Bundle();
+        genderAdapter = new RecyclerChipsViewAdapter(genders, getContext(), (value, position) -> {
+            if(position==genders.size()){//
+                ArrayList<String> withoutSelected= new ArrayList<>(gendersString);
+                Bundle args = new Bundle();
 
-                    args.putStringArrayList(ListSelectionFragment.FULL_LIST, (ArrayList<String>) gendersString);
-                    genders.forEach(item->{
-                        withoutSelected.remove(item.getText());
-                    });
+                args.putStringArrayList(ListSelectionFragment.FULL_LIST, (ArrayList<String>) gendersString);
+                genders.forEach(item->{
+                    withoutSelected.remove(item.getText());
+                });
 
-                    args.putStringArrayList(ListSelectionFragment.LIST_WITHOUT_SELECTED,withoutSelected);
-                    args.putString(ListSelectionFragment.CALLER_ID,GENDER);
-                    getNavController().navigate(R.id.listSelectionFragment,args);
-                }else{
-                    genders.remove(position.intValue());
-                    if(validate())
-                        save();
-                    genderAdapter.UpdateList(genders);
-                }
+                args.putStringArrayList(ListSelectionFragment.LIST_WITHOUT_SELECTED,withoutSelected);
+                args.putString(ListSelectionFragment.CALLER_ID,GENDER);
+                getNavController().navigate(R.id.listSelectionFragment,args);
+            }else{
+                genders.remove(position.intValue());
+                genderAdapter.UpdateList(genders);
+                dataTransfer.setPrefferedGender(dataTransfer.getUUID(), ChipItemMapper.mapListChipItemToListInteger(genders, gendersString))
+                        .continueWithTask(task->load());
             }
         });
 
-        orientationAdapter = new RecyclerChipsViewAdapter(orientations, getContext(), new RecyclerChipsViewAdapter.OnRecyclerItemClick() {
-            @Override
-            public void onItemClick(String value, Integer position) {
-                if(position==orientations.size()){//
-                    ArrayList<String> withoutSelected= new ArrayList<>(orientationsString);
-                    Bundle args = new Bundle();
+        orientationAdapter = new RecyclerChipsViewAdapter(orientations, getContext(), (value, position) -> {
+            if(position==orientations.size()){//
+                ArrayList<String> withoutSelected= new ArrayList<>(orientationsString);
+                Bundle args = new Bundle();
 
-                    args.putStringArrayList(ListSelectionFragment.FULL_LIST, (ArrayList<String>) orientationsString);
-                    orientations.forEach(item->{
-                        withoutSelected.remove(item.getText());
-                    });
+                args.putStringArrayList(ListSelectionFragment.FULL_LIST, (ArrayList<String>) orientationsString);
+                orientations.forEach(item->{
+                    withoutSelected.remove(item.getText());
+                });
 
-                    args.putStringArrayList(ListSelectionFragment.LIST_WITHOUT_SELECTED,withoutSelected);
-                    args.putString(ListSelectionFragment.CALLER_ID,ORIENTATION);
-                    getNavController().navigate(R.id.listSelectionFragment,args);
-                }else{
-                    orientations.remove(position.intValue());
-                    if(validate())
-                        save();
-                    orientationAdapter.UpdateList(orientations);
-                }
+                args.putStringArrayList(ListSelectionFragment.LIST_WITHOUT_SELECTED,withoutSelected);
+                args.putString(ListSelectionFragment.CALLER_ID,ORIENTATION);
+                getNavController().navigate(R.id.listSelectionFragment,args);
+            }else{
+                orientations.remove(position.intValue());
+                orientationAdapter.UpdateList(orientations);
+                dataTransfer.setPrefferedOrientation(dataTransfer.getUUID(), ChipItemMapper.mapListChipItemToListInteger(orientations, orientationsString))
+                        .continueWithTask(task->load());
             }
         });
 
@@ -180,9 +195,9 @@ public class EnterWhoToShowFragment extends AccountCreation {
                     getNavController().navigate(R.id.listSelectionFragment,args);
                 }else{
                     passions.remove(position.intValue());
-                    if(validate())
-                        save();
                     passionsAdapter.UpdateList(passions);
+                    dataTransfer.setPrefferedOrientation(dataTransfer.getUUID(), ChipItemMapper.mapListChipItemToListInteger(passions, passionsString))
+                            .continueWithTask(task->load());
                 }
             }
         });
@@ -225,14 +240,17 @@ public class EnterWhoToShowFragment extends AccountCreation {
         binding.ageRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
             List<Float> age=slider.getValues();
             binding.age.setText(age.get(0).intValue() +"-"+age.get(1).intValue());
-            if(validate())
-                save();
+            dataTransfer.setPrefferedAge(dataTransfer.getUUID(),age.stream().map(Float::intValue).collect(Collectors.toList()))
+                    .addOnCompleteListener(task -> {
+                        validateAndEnableNext();
+                    });
         });
 
         binding.distanceSeekBar.addOnChangeListener((slider, value, fromUser) -> {
             binding.distance.setText((int)value+" km");
-            if(validate())
-                save();
+            dataTransfer.setPrefferedDistance(dataTransfer.getUUID(),(int)value).addOnCompleteListener(task->{
+               validateAndEnableNext();
+            });
         });
     }
 
@@ -247,76 +265,85 @@ public class EnterWhoToShowFragment extends AccountCreation {
     }
 
     @Override
-    protected void load() {
-      userPreferences=this.getAuthenticationViewModel().getPreferences();
-
-      passions = mapper.mapListIntegerToListChipItem(userPreferences.getPassions(),passionsString);
-      genders = mapper.mapListIntegerToListChipItem(userPreferences.getGenderId(),gendersString);
-      orientations = mapper.mapListIntegerToListChipItem(userPreferences.getOrientationId(),orientationsString);
-
-      passionsAdapter.UpdateList(passions);
-      genderAdapter.UpdateList(genders);
-      orientationAdapter.UpdateList(orientations);
-
-      binding.ageRangeSlider.setValues(
-              List.of(
-                userPreferences.getMinAge().floatValue(),
-                userPreferences.getMaxAge().floatValue()
-              )
-      );
-      binding.distanceSeekBar.setValue(userPreferences.getMaxDistance().floatValue());
-
-      binding.age.setText(binding.ageRangeSlider.getValues().get(0).intValue() +"-"+binding.ageRangeSlider.getValues().get(1).intValue());
-      binding.distance.setText(String.valueOf(binding.distanceSeekBar.getValue())+" km");
+    protected Task<DataSnapshot> load() {
+        return dataTransfer.getPreferences(dataTransfer.getUUID()).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    userPreferences = Optional.ofNullable(task.getResult().getValue(UserPreferences.class)).orElse(new UserPreferences());
+                    passions = ChipItemMapper.mapListIntegerToListChipItem(userPreferences.getPassions().stream().map(Integer::longValue).collect(Collectors.toList()), passionsString);
+                    genders = ChipItemMapper.mapListIntegerToListChipItem(userPreferences.getGenderId().stream().map(Integer::longValue).collect(Collectors.toList()), gendersString);
+                    orientations = ChipItemMapper.mapListIntegerToListChipItem(userPreferences.getOrientationId().stream().map(Integer::longValue).collect(Collectors.toList()), orientationsString);
+                    passionsAdapter.UpdateList(passions);
+                    genderAdapter.UpdateList(genders);
+                    orientationAdapter.UpdateList(orientations);
+                    binding.ageRangeSlider.setValues(
+                            List.of(
+                                    userPreferences.getMinAge().floatValue(),
+                                    userPreferences.getMaxAge().floatValue()
+                            )
+                    );
+                    binding.distanceSeekBar.setValue(userPreferences.getMaxDistance().floatValue());
+                    binding.age.setText(binding.ageRangeSlider.getValues().get(0).intValue() + "-" + binding.ageRangeSlider.getValues().get(1).intValue());
+                    binding.distance.setText(binding.distanceSeekBar.getValue() + " km");
+                    validateAndEnableNext();
+                }
+            }else{
+                load();
+            }
+       });
     }
 
 
     @Override
-    protected void save() {
+    protected Task<Void> save() {
         userPreferences.setMaxDistance((int)binding.distanceSeekBar.getValue());
         userPreferences.setMinAge(binding.ageRangeSlider.getValues().get(0).intValue());
         userPreferences.setMaxAge(binding.ageRangeSlider.getValues().get(1).intValue());
 
-        userPreferences.setPassions(mapper.mapListChipItemToListInteger(passions,passionsString));
-        userPreferences.setGenderId(mapper.mapListChipItemToListInteger(genders,gendersString));
-        userPreferences.setOrientationId(mapper.mapListChipItemToListInteger(orientations,orientationsString));
+        userPreferences.setPassions(ChipItemMapper.mapListChipItemToListInteger(passions,passionsString));
+        userPreferences.setGenderId(ChipItemMapper.mapListChipItemToListInteger(genders,gendersString));
+        userPreferences.setOrientationId(ChipItemMapper.mapListChipItemToListInteger(orientations,orientationsString));
 
-        this.getAuthenticationViewModel().setPreferences(userPreferences);
+        dataTransfer.setPreferences(dataTransfer.getUUID(), userPreferences).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                if(binding!=null) {
+                    validateAndEnableNext();
+                }
+            }else{
+                save();
+            }
+        });
+        return null;
     }
 
     @Override
     protected void moveNext(View view) {
-        StorageReference ref=storageReference.child(this.getAuthenticationViewModel().getUserUID());
-
-        for(Integer i=0;i<this.getAuthenticationViewModel().getPhotos().size();i++){
-            Bitmap bitmap = this.getAuthenticationViewModel().getPhotos().get(i);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-            UploadTask uploadTask = ref.child(i.toString()).putBytes(data);
-            uploadTask
-                    .addOnFailureListener(exception -> showSnackbar("Failure"))
-                    .addOnSuccessListener(taskSnapshot -> showSnackbar("Sent"));
-        }
-        db
-                .collection("users")
-                .document(this.getAuthenticationViewModel().getUserUID())
-                .set(this.getAuthenticationViewModel().getUserData().getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                            showSnackbar("Sent");
-                        else{
-                            showSnackbar("Failure");
-                        }
-                    }
-                });
-        //TODO send data to firestore
+        moveToMainActivity();
     }
-
 
     @Override
     protected Boolean validate() {
-        return true;
+        setValid(true);
+        return getValid();
+    }
+
+    @Override
+    protected Boolean validateAndEnableNext() {
+        boolean valid = validate();
+        if(valid){
+            binding.next.setEnabled(getValid());
+        }
+        return valid;
+    }
+
+    private void moveToMainActivity()
+    {
+        this.mainActivityViewModel.setBottomBarVisible(true);
+        this.mainActivityViewModel.setActionBarVisible(true);
+        this.mainActivityViewModel.setProgressBarVisible(false);
+        this.dataTransfer.setNewUser(dataTransfer.getUUID(), false).addOnCompleteListener(task -> {
+            this.mainActivityViewModel.getMainActivity().addProfilePhotoListener();
+            navController.navigate(R.id.swipeFragment,null,navOptions);
+        });
     }
 }
